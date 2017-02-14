@@ -8,7 +8,6 @@ gem 'bson', '~> 4.2', '>= 4.2.1'
 gem 'pry-rails'
 gem 'mongoid', '~> 5.0.0'
 gem 'rack-cors', '~>0.4', '>=0.4.0', :require => 'rack/cors'
-gem 'sqlite3'
 
 group :development, :test do
   gem 'spring', '~>2.0', '>=2.0.0'
@@ -17,6 +16,7 @@ group :development, :test do
   gem 'byebug'
   gem 'mongoid-rspec', '3.0.0'
   gem 'tzinfo-data', platforms: [:mingw, :x64_mingw, :mswin, :jruby]
+  gem 'sqlite3'
 end
 
 group :production do
