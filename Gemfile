@@ -24,9 +24,9 @@ group :production do
  # gem 'puma', '~>3.6', '>=3.6.0', :platforms=>:ruby
 
  # Heroku does't want to deploy without it:
-  gem 'sass-rails', '~> 5.0', '>=3.4.22'
-  gem 'uglifier', '~> 3.0', '>=3.0.2'
-  gem 'coffee-rails', '~> 4.1', '>= 4.1.0'
-  gem 'jquery-rails', '~>4.2', '>=4.2.1'
+  gem 'turbolinks'
+  gem 'uglifier'
+  gem 'coffee-rails'
+  gem 'jquery-rails'
 
 end
