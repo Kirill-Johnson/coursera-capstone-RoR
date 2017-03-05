@@ -1,2 +1,2 @@
-##Assignment: Module #4 — Secure Information
+##Assignment: Module #4 — Fullstack Secure Information
 ###Capstone Demo Application
