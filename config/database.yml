@@ -12,7 +12,8 @@ development:
 
 test:
   <<: *default
-  database: mod4_test
+  database: postgres
+# Had very fun error with any other db name
 
 production:
   adapter: postgresql
