@@ -13,7 +13,7 @@ gem 'coffee-rails', '~> 4.1', '>= 4.1.0'
 gem 'jquery-rails', '~>4.2', '>=4.2.1'
 gem 'jbuilder', '~> 2.0', '>=2.6.0'
 
-# gem 'puma', '~>3.6', '>=3.6.0', :platforms=>:ruby
+gem 'puma', '~>3.6', '>=3.6.0', :platforms=>:ruby
 gem 'mongoid', '~>5.1', '>=5.1.5'
 gem 'database_cleaner', '~>1.5', '>=1.5.3'
 gem 'factory_girl_rails', '~>4.7', '>=4.7.0'
@@ -24,7 +24,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'webrick', '~>1.3', '>=1.3.1', :platforms=>[:mingw, :mswin, :x64_mingw, :jruby]
+  # gem 'webrick', '~>1.3', '>=1.3.1', :platforms=>[:mingw, :mswin, :x64_mingw, :jruby]
   gem 'tzinfo-data', :platforms=>[:mingw, :mswin, :x64_mingw, :jruby]
   gem 'sqlite3', '~>1.3', '>=1.3.12'
   gem 'byebug', '~>9.0', '>=9.0.6'
