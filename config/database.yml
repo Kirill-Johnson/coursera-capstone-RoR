@@ -7,16 +7,12 @@ default: &default
   host: <%= ENV['POSTGRES_HOST'] %>
 
 development:
-  adapter: sqlite3
-  pool: 5
-  timeout: 5000
-  database: db/development.sqlite3
+  <<: *default
+  database: mod4_development
 
 test:
-  adapter: sqlite3
-  pool: 5
-  timeout: 5000
-  database: db/development.sqlite3
+  <<: *default
+  database: mod4_test
 
 production:
   adapter: postgresql
