@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  # resources :services, except: [:new, :edit]
+   # this would make available /services
+
   get 'authn/whoami', defaults: {format: :json}
   get 'authn/checkme'
 
@@ -8,6 +11,7 @@ Rails.application.routes.draw do
   scope :api, defaults: {format: :json}  do 
     resources :foos, except: [:new, :edit]
     resources :bars, except: [:new, :edit]
+    resources :services, except: [:new, :edit] # this makes /api/services
     resources :images, except: [:new, :edit] do
       post "thing_images",  controller: :thing_images, action: :create
       get "thing_images",  controller: :thing_images, action: :image_things
