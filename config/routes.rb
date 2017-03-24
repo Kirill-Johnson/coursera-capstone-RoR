@@ -19,7 +19,6 @@ Rails.application.routes.draw do
 # Services switсhed to tags, so this makes not too much sense
     resources :services, except: [:new, :edit] # this makes /api/services
 
-
     resources :images, except: [:new, :edit] do
       post "thing_images",  controller: :thing_images, action: :create
       get "thing_images",  controller: :thing_images, action: :image_things
