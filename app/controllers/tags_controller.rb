@@ -1,47 +1,51 @@
 class TagsController < ApplicationController
   before_action :set_tag, only: [:show, :update, :destroy]
+  wrap_parameters :tag, include: ["name"]
+  before_action :authenticate_user!, only: [:create, :update, :destroy]
+  after_action :verify_authorized
+  after_action :verify_policy_scoped, only: [:index]
 
-  # GET /tags
-  # GET /tags.json
   def index
-    @tags = Tag.all
-
-    render json: @tags
+    authorize Tag
+    @tags = policy_scope(Tag.all)
+    @tags = TagPolicy.merge(@tags)
   end
 
-  # GET /tags/1
-  # GET /tags/1.json
   def show
-    render json: @tag
+    authorize @tag
+    tags = policy_scope(Tag.where(:id=>@tag.id))
+    @tag = TagPolicy.merge(tags).first
   end
 
-  # POST /tags
-  # POST /tags.json
   def create
+    authorize Tag
     @tag = Tag.new(tag_params)
+    @tag.creator_id=current_user.id
 
-    if @tag.save
-      render json: @tag, status: :created, location: @tag
-    else
-      render json: @tag.errors, status: :unprocessable_entity
+    User.transaction do
+      if @tag.save
+        role=current_user.add_role(Role::ORGANIZER, @tag)
+        @tag.user_roles << role.role_name
+        role.save!
+        render :show, status: :created, location: @tag
+      else
+        render json: {errors:@tag.errors.messages}, status: :unprocessable_entity
+      end
     end
   end
 
-  # PATCH/PUT /tags/1
-  # PATCH/PUT /tags/1.json
   def update
-    @tag = Tag.find(params[:id])
+    authorize @tag
 
     if @tag.update(tag_params)
       head :no_content
     else
-      render json: @tag.errors, status: :unprocessable_entity
+      render json: {errors:@tag.errors.messages}, status: :unprocessable_entity
     end
   end
 
-  # DELETE /tags/1
-  # DELETE /tags/1.json
   def destroy
+    authorize @tag
     @tag.destroy
 
     head :no_content
