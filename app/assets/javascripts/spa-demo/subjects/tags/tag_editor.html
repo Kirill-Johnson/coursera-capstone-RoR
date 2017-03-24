@@ -17,10 +17,10 @@
        ng-show="$ctrl.item.id">
     <label class="col-xs-3">Related Things:</label>
     <ul class="tag-things col-xs-9">
-      <li ng-repeat="ti in $ctrl.things | orderBy:'priority'">
-        <a data-ui-sref="things({id:ti.thing_id})">
-          <span class="id thing_id">{{ti.thing_id}}</span>
-          {{ti.thing_name}}</a>
+      <li ng-repeat="tt in $ctrl.things | orderBy:'priority'">
+        <a data-ui-sref="things({id:tt.thing_id})">
+          <span class="id thing_id">{{tt.thing_id}}</span>
+          {{tt.thing_name}}</a>
       </li>
     </ul>
     <span class="invalid">{{$ctrl.item.errors.thing_tags}}</span>
@@ -43,7 +43,7 @@
 
   <div class="tag-controls">
     <span ng-show="$ctrl.authz.authenticated">
-      <button name="tag-create"
+      <button name="tag-create" style="margin-left: 15px"
               ng-show="!$ctrl.item.id && $ctrl.authz.canCreate"
               type="submit"
               ng-disabled="tagform.$invalid"
