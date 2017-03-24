@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     resources :foos, except: [:new, :edit]
     resources :bars, except: [:new, :edit]
 
-# Services swithed to tags, so this most likely would output empty json document
+# Services swithed to tags, so this makes not too much sense
     resources :services, except: [:new, :edit] # this makes /api/services
 
 
