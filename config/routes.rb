@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   #resources :tags, except: [:new, :edit]
    # this would make available /tags
 
-# Services swithed to tags
+# Services switched to tags
   # resources :services, except: [:new, :edit]
    # this would make available /services
 
