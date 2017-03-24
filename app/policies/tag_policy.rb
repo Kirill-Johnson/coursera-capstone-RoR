@@ -1,11 +1,11 @@
 class TagPolicy < ApplicationPolicy
   def index?
-    @user
-    #true
+    true
+    #@user
   end
   def show?
-    @user
-    #true
+    true
+    #@user
   end
   def create?
     @user

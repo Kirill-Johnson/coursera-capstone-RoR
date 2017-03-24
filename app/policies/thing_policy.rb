@@ -39,6 +39,27 @@ class ThingPolicy < ApplicationPolicy
     organizer_or_admin?
   end
 
+  def get_tag_linkables?
+    @user
+  end
+
+  def get_tags?
+    true
+    #@user
+  end
+
+  def add_tag?
+    organizer?
+  end
+
+  def update_tag?
+    organizer?
+  end
+
+  def remove_tag?
+    organizer_or_admin?
+  end
+
   class Scope < Scope
     def user_roles members_only=true, allow_admin=true
       include_admin=allow_admin && @user && @user.is_admin?
@@ -53,6 +74,17 @@ class ThingPolicy < ApplicationPolicy
                s.where("r.role_name"=>[Role::ORGANIZER, Role::MEMBER])
              end}
     end
+
+    def user_roles2
+      member_join = "join"
+      joins_clause=["#{member_join} Roles r on r.mname='Thing'",
+                    "r.user_id #{user_criteria}",
+                    "r.mid=Things.id",
+                    "r.role_name='#{Role::ORGANIZER}'"].join(" and ")
+      scope.select("Things.*, r.role_name")
+           .joins(joins_clause)
+    end
+
     def resolve
       user_roles 
     end
