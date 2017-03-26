@@ -111,23 +111,34 @@
       <span class="thing-modify"
             data-ng-hide="!$ctrl.authz.canUpdate &&
                           !$ctrl.authz.canUpdateImage &&
-                          !$ctrl.authz.canRemoveImage">
+                          !$ctrl.authz.canRemoveImage &&
+                          !$ctrl.authz.canUpdateTag &&
+                          !$ctrl.authz.canRemoveTag">
         <button name="thing-update"
-                type="submit"          
+                type="submit"
                 ng-disabled="thingform.$invalid || !thingform.$dirty"
-                data-ng-hide="$ctrl.haveDirtyLinks() &&
+                data-ng-hide="($ctrl.haveDirtyLinks() ||
+                  $ctrl.haveDirtyTags()) &&
                   (!thingform['thing-name'].$dirty && 
                    !thingform['thing-desc'].$dirty && 
                    !thingform['thing-notes'].$dirty)"
                 ng-click="$ctrl.update()">Update Thing</button>
         <button name="thing-images-update"
-                type="submit"          
+                type="submit"
                 data-ng-show="$ctrl.haveDirtyLinks() &&
                   (!thingform['thing-name'].$dirty && 
                    !thingform['thing-desc'].$dirty && 
                    !thingform['thing-notes'].$dirty)"
                 ng-click="$ctrl.updateImageLinks()">Update Image Links</button>        
+        <button name="thing-tags-update"
+                type="submit"
+                data-ng-show="$ctrl.haveDirtyTags() &&
+                  (!thingform['thing-name'].$dirty && 
+                   !thingform['thing-desc'].$dirty && 
+                   !thingform['thing-notes'].$dirty)"
+                ng-click="$ctrl.updateTagLinks()">Update Tag Links</button>        
       </span>
+
 
       <button name="thing-delete"
               type="submit"
