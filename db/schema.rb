@@ -11,16 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170320130101) do
+ActiveRecord::Schema.define(version: 20170502114858) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "cities", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "foos", force: :cascade do |t|
     t.string   "name",       null: false
@@ -54,11 +48,29 @@ ActiveRecord::Schema.define(version: 20170320130101) do
   add_index "roles", ["mname"], name: "index_roles_on_mname", using: :btree
   add_index "roles", ["user_id"], name: "index_roles_on_user_id", using: :btree
 
-  create_table "services", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "stop_images", force: :cascade do |t|
+    t.integer  "image_id",               null: false
+    t.integer  "stop_id",                null: false
+    t.integer  "creator_id"
+    t.integer  "priority",   default: 5, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
+
+  add_index "stop_images", ["image_id"], name: "index_stop_images_on_image_id", using: :btree
+  add_index "stop_images", ["stop_id"], name: "index_stop_images_on_stop_id", using: :btree
+
+  create_table "stops", force: :cascade do |t|
+    t.string   "name",        null: false
+    t.text     "description"
+    t.text     "notes"
+    t.integer  "creator_id"
+    t.integer  "trip_id",     null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "stops", ["trip_id"], name: "index_stops_on_trip_id", using: :btree
 
   create_table "thing_images", force: :cascade do |t|
     t.integer  "image_id",               null: false
@@ -82,6 +94,23 @@ ActiveRecord::Schema.define(version: 20170320130101) do
   end
 
   add_index "things", ["name"], name: "index_things_on_name", using: :btree
+
+  create_table "trip_stops", force: :cascade do |t|
+    t.integer  "stop_id"
+    t.integer  "trip_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "trip_stops", ["stop_id"], name: "index_trip_stops_on_stop_id", using: :btree
+  add_index "trip_stops", ["trip_id"], name: "index_trip_stops_on_trip_id", using: :btree
+
+  create_table "trips", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.integer  "creator_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "provider",               default: "email", null: false
@@ -113,6 +142,11 @@ ActiveRecord::Schema.define(version: 20170320130101) do
   add_index "users", ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
 
   add_foreign_key "roles", "users"
+  add_foreign_key "stop_images", "images"
+  add_foreign_key "stop_images", "stops"
+  add_foreign_key "stops", "trips"
   add_foreign_key "thing_images", "images"
   add_foreign_key "thing_images", "things"
+  add_foreign_key "trip_stops", "stops"
+  add_foreign_key "trip_stops", "trips"
 end
